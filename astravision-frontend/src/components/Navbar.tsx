@@ -24,7 +24,6 @@ const Navbar = () => {
     const adminLinks = [
         { name: 'Admin Dashboard', path: '/admin/dashboard', icon: Cpu },
         { name: 'Alerts', path: '/admin/alerts', icon: ShieldAlert },
-        { name: 'Results', path: '/admin/results', icon: Activity },
         { name: 'System Controls', path: '/admin/system-controls', icon: Settings },
         { name: 'Settings', path: '/admin/settings', icon: Sliders },
         { name: 'Users', path: '/admin/user-management', icon: Users },

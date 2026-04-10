@@ -3,7 +3,6 @@ import MainLayout from './layouts/MainLayout';
 import Landing from './pages/public/Landing';
 import Architecture from './pages/public/Architecture';
 import Alerts from './pages/public/Alerts';
-import Results from './pages/public/Results';
 import About from './pages/public/About';
 import Login from './pages/auth/Login';
 import UserDashboard from './pages/dashboards/UserDashboard';
@@ -43,7 +42,6 @@ function App() {
                 <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
                 <Route path="/admin/dashboard" element={<RoleProtectedRoute allowedRoles={['admin']}><AdminDashboard /></RoleProtectedRoute>} />
                 <Route path="/admin/alerts" element={<RoleProtectedRoute allowedRoles={['admin']}><Alerts /></RoleProtectedRoute>} />
-                <Route path="/admin/results" element={<RoleProtectedRoute allowedRoles={['admin']}><Results /></RoleProtectedRoute>} />
                 <Route path="/admin/system-controls" element={<RoleProtectedRoute allowedRoles={['admin']}><SystemControls /></RoleProtectedRoute>} />
                 <Route path="/admin/settings" element={<RoleProtectedRoute allowedRoles={['admin']}><Settings /></RoleProtectedRoute>} />
                 <Route path="/admin/user-management" element={<RoleProtectedRoute allowedRoles={['admin']}><UserManagement /></RoleProtectedRoute>} />

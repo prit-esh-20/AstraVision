@@ -202,43 +202,6 @@ const Landing = () => {
                             </motion.button>
                         </Link>
 
-                        <Link to="/results">
-                            <motion.button
-                                whileHover="hover"
-                                whileTap={{ scale: 0.98 }}
-                                initial="rest"
-                                animate="rest"
-                                className="px-10 py-5 glass-panel border-dark-border text-white font-black rounded-lg uppercase tracking-widest transition-colors duration-300 group"
-                            >
-                                <motion.span
-                                    variants={{
-                                        rest: { color: "#ffffff" },
-                                        hover: { color: "#00F0FF" }
-                                    }}
-                                    className="text-sm"
-                                >
-                                    System Results
-                                </motion.span>
-                                <motion.div
-                                    className="inline-block ml-3"
-                                    variants={{
-                                        rest: { rotate: 0, scale: 1 },
-                                        hover: { rotate: 45, scale: 1.1 }
-                                    }}
-                                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                                >
-                                    <Activity className="w-5 h-5 text-neon-blue group-hover:text-neon-cyan transition-colors" />
-                                </motion.div>
-                                <motion.div
-                                    variants={{
-                                        rest: { y: 0, borderColor: "rgba(30, 41, 59, 1)" },
-                                        hover: { y: -3, borderColor: "rgba(0, 240, 255, 0.5)" }
-                                    }}
-                                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                                    className="absolute inset-0 rounded-lg border -z-10"
-                                />
-                            </motion.button>
-                        </Link>
                     </div>
                 </motion.div>
             </section>
