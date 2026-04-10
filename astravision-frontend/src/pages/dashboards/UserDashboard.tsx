@@ -224,46 +224,54 @@ const UserDashboard = () => {
                         <div className="space-y-4 overflow-y-auto custom-scrollbar pr-2 flex-grow mb-4">
                             <AnimatePresence>
                                 {alerts.length > 0 ? (
-                                    alerts.slice(0, 3).map((alert, idx) => {
-                                        const status = (alert.status || 'LOGGED').toUpperCase();
-                                        const statusStyles = 
-                                            status === 'ACTIVE' ? 'border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.2)] bg-red-500/5' :
-                                            status === 'VERIFIED' ? 'border-neon-cyan/50 bg-neon-cyan/5' :
-                                            'border-yellow-500/50 bg-yellow-500/5';
-                                        
-                                        const dotColor = 
-                                            status === 'ACTIVE' ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]' :
-                                            status === 'VERIFIED' ? 'bg-neon-cyan shadow-[0_0_8px_rgba(0,240,255,0.8)]' :
-                                            'bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.8)]';
+                                    [...alerts]
+                                        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+                                        .slice(0, 5)
+                                        .map((alert, idx) => {
+                                            const severity = (alert.severity || 'INFO').toUpperCase();
+                                            const status = (alert.status || 'LOGGED').toUpperCase();
+                                            
+                                            const themeStyles = 
+                                                severity === 'CRITICAL' ? 'border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.2)] bg-red-500/5' :
+                                                severity === 'WARNING' ? 'border-yellow-500/50 bg-yellow-500/5' :
+                                                'border-neon-cyan/50 bg-neon-cyan/5';
+                                            
+                                            const dotColor = 
+                                                severity === 'CRITICAL' ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]' :
+                                                severity === 'WARNING' ? 'bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.8)]' :
+                                                'bg-neon-cyan shadow-[0_0_8px_rgba(0,240,255,0.8)]';
 
-                                        return (
-                                            <motion.div
-                                                key={alert.id || idx}
-                                                initial={{ opacity: 0, x: 20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: idx * 0.1 }}
-                                                className={`p-4 rounded-xl border ${statusStyles} backdrop-blur-sm relative overflow-hidden transition-all duration-300`}
-                                            >
-                                                <div className="flex justify-between items-start mb-2 relative z-10">
-                                                    <span className="text-[10px] font-mono opacity-80 flex items-center gap-1.5 font-bold">
-                                                        {getSeverityIcon(alert.severity || 'info')}
-                                                        {alert.created_at ? new Date(alert.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'N/A'}
-                                                    </span>
-                                                    <span className={`text-[9px] font-bold uppercase tracking-widest bg-black/60 px-2.5 py-1 rounded border border-current opacity-90 ${
-                                                        status === 'ACTIVE' ? 'text-red-500' : status === 'VERIFIED' ? 'text-neon-cyan' : 'text-yellow-500'
-                                                    }`}>
-                                                        {alert.status || 'Active'}
-                                                    </span>
-                                                </div>
-                                                <div className="flex items-start gap-2 relative z-10 mt-1">
-                                                    <span className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${dotColor}`} />
-                                                    <p className="text-sm font-medium leading-snug">
-                                                        {alert.message}
-                                                    </p>
-                                                </div>
-                                            </motion.div>
-                                        );
-                                    })
+                                            const textColor = 
+                                                severity === 'CRITICAL' ? 'text-red-500' : 
+                                                severity === 'WARNING' ? 'text-yellow-500' : 
+                                                'text-neon-cyan';
+
+                                            return (
+                                                <motion.div
+                                                    key={alert.id || idx}
+                                                    initial={{ opacity: 0, x: 20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: idx * 0.1 }}
+                                                    className={`p-4 rounded-xl border ${themeStyles} backdrop-blur-sm relative overflow-hidden transition-all duration-300`}
+                                                >
+                                                    <div className="flex justify-between items-start mb-2 relative z-10">
+                                                        <span className="text-[10px] font-mono opacity-80 flex items-center gap-1.5 font-bold">
+                                                            {getSeverityIcon(alert.severity || 'info')}
+                                                            {alert.created_at ? new Date(alert.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'N/A'}
+                                                        </span>
+                                                        <span className={`text-[9px] font-bold uppercase tracking-widest bg-black/60 px-2.5 py-1 rounded border border-current opacity-90 ${textColor}`}>
+                                                            {status}
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex items-start gap-2 relative z-10 mt-1">
+                                                        <span className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${dotColor}`} />
+                                                        <p className="text-sm font-medium leading-snug">
+                                                            {alert.message}
+                                                        </p>
+                                                    </div>
+                                                </motion.div>
+                                            );
+                                        })
                                 ) : (
                                     <div className="flex flex-col items-center justify-center h-40 text-gray-500 opacity-60">
                                         <AlertTriangle className="w-8 h-8 mb-2 opacity-20" />
