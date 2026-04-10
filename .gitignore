@@ -1,0 +1,77 @@
+# Root Gitignore for AstraVision Monorepo
+
+# =========================
+# Dependencies
+# =========================
+node_modules/
+**/node_modules/
+
+# =========================
+# Build outputs
+# =========================
+dist/
+**/dist/
+dist-ssr/
+**/dist-ssr/
+build/
+**/build/
+
+# =========================
+# Logs
+# =========================
+*.log
+**/logs/
+
+# =========================
+# IDE / OS files
+# =========================
+.vscode/
+.idea/
+.DS_Store
+
+# =========================
+# Environment files
+# =========================
+.env
+.env.local
+.env.*.local
+**/.env
+**/.env.*
+
+# =========================
+# Python / Virtual Env
+# =========================
+**/.venv/
+**/venv/
+**/__pycache__/
+*.pyc
+
+# =========================
+# ML model files
+# =========================
+*.pth
+*.pt
+*.onnx
+*.h5
+*.pkl
+
+# =========================
+# Dataset / recordings / frames
+# =========================
+ML/.venv/
+ML/Dataset/
+ML/Dataset/**
+uploads/
+frames/
+datasets/
+recordings/
+
+# =========================
+# Media files
+# =========================
+*.mp4
+*.avi
+*.jpg
+*.jpeg
+*.png
+*.gif

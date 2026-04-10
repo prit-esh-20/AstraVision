@@ -1,0 +1,2 @@
+Average inference time per batch: 0.0115 sec
+Average inference time per image: 0.00072 sec

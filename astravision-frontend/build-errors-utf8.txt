@@ -1,0 +1,13 @@
+﻿
+> fusionguard-ai@0.0.0 build
+> tsc -b && vite build
+
+src/pages/public/About.tsx(1,1): error TS6133: 'useEffect' is declared but its value is never read.
+src/pages/public/About.tsx(8,11): error TS6198: All destructured elements are unused.
+src/pages/public/About.tsx(9,11): error TS6133: 'navigate' is declared but its value is never read.
+src/pages/public/Architecture.tsx(7,1): error TS6133: 'useEffect' is declared but its value is never read.
+src/pages/public/Architecture.tsx(66,11): error TS6198: All destructured elements are unused.
+src/pages/public/Architecture.tsx(67,11): error TS6133: 'navigate' is declared but its value is never read.
+src/pages/public/Landing.tsx(1,1): error TS6133: 'useEffect' is declared but its value is never read.
+src/pages/public/Landing.tsx(77,30): error TS6133: 'role' is declared but its value is never read.
+src/pages/public/Landing.tsx(78,11): error TS6133: 'navigate' is declared but its value is never read.
