@@ -67,7 +67,7 @@ const AlertItem = ({ time, msg, type, status }: any) => {
 };
 
 const Alerts = () => {
-    const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
+    const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }));
     const [alerts, setAlerts] = useState<any[]>([]);
     const previousAlertCount = useRef(0);
 
@@ -94,7 +94,7 @@ const Alerts = () => {
     }, []);
 
     useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date().toLocaleTimeString()), 1000);
+        const timer = setInterval(() => setCurrentTime(new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })), 1000);
         return () => clearInterval(timer);
     }, []);
 
@@ -123,7 +123,18 @@ const Alerts = () => {
                 {alerts.map((alert, i) => (
                     <AlertItem 
                         key={alert.id || i} 
-                        time={alert.created_at ? new Date(alert.created_at).toLocaleTimeString() : 'N/A'}
+                        time={alert.created_at ? (() => {
+                            const dateStr = typeof alert.created_at === 'string' && !alert.created_at.includes('Z') && !alert.created_at.includes('+') 
+                                ? alert.created_at.replace(' ', 'T') + 'Z' 
+                                : alert.created_at;
+                            return new Date(dateStr).toLocaleTimeString('en-IN', {
+                                timeZone: 'Asia/Kolkata',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit',
+                                hour12: true
+                            });
+                        })() : 'N/A'}
                         msg={alert.message}
                         type={alert.severity || alert.type || 'info'}
                         status={alert.status || 'LOGGED'}

@@ -42,7 +42,12 @@ const RecordingCard = ({ recording: rec, onSelect, onDownload }: any) => (
             <div className="space-y-2 mb-6 flex-grow bg-black/20 p-3 rounded-lg border border-white/5">
                 <div className="flex items-center text-xs font-mono text-gray-400">
                     <Calendar className="w-3.5 h-3.5 mr-2 text-neon-cyan" />
-                    {rec.recorded_at ? new Date(rec.recorded_at).toLocaleString() : "Unknown Date"}
+                    {rec.recorded_at ? (() => {
+                        const dateStr = typeof rec.recorded_at === 'string' && !rec.recorded_at.includes('Z') && !rec.recorded_at.includes('+') 
+                            ? rec.recorded_at.replace(' ', 'T') + 'Z' 
+                            : rec.recorded_at;
+                        return new Date(dateStr).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+                    })() : "Unknown Date"}
                 </div>
                 <div className="flex items-center text-xs font-mono text-gray-400">
                     <Clock className="w-3.5 h-3.5 mr-2 text-neon-cyan" />
@@ -90,8 +95,15 @@ const Recordings = () => {
             
             // Sort frontend data since API sorting might not be implemented
             data.sort((a: any, b: any) => {
-                const timeA = new Date(a.created_at || 0).getTime();
-                const timeB = new Date(b.created_at || 0).getTime();
+                const getTs = (ts: any) => {
+                    if (!ts) return 0;
+                    const dateStr = typeof ts === 'string' && !ts.includes('Z') && !ts.includes('+') 
+                        ? ts.replace(' ', 'T') + 'Z' 
+                        : ts;
+                    return new Date(dateStr).getTime();
+                };
+                const timeA = getTs(a.recorded_at || a.created_at);
+                const timeB = getTs(b.recorded_at || b.created_at);
                 return sort === 'Latest First' ? timeB - timeA : timeA - timeB;
             });
             
@@ -239,7 +251,12 @@ const Recordings = () => {
                                         </span>
                                         <span className="flex items-center gap-2">
                                             <Calendar className="w-4 h-4 text-neon-cyan" />
-                                            {selectedRecording.recorded_at ? new Date(selectedRecording.recorded_at).toLocaleString() : "Unknown Date"}
+                                            {selectedRecording.recorded_at ? (() => {
+                                                const dateStr = typeof selectedRecording.recorded_at === 'string' && !selectedRecording.recorded_at.includes('Z') && !selectedRecording.recorded_at.includes('+') 
+                                                    ? selectedRecording.recorded_at.replace(' ', 'T') + 'Z' 
+                                                    : selectedRecording.recorded_at;
+                                                return new Date(dateStr).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+                                            })() : "Unknown Date"}
                                         </span>
                                     </div>
                                 </div>

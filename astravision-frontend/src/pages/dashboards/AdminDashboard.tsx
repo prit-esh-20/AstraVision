@@ -38,6 +38,8 @@ const AdminDashboard = () => {
     const [alerts, setAlerts] = useState<any[]>([]);
     const uptime = metrics?.uptime || '--:--:--';
     const [confirmAction, setConfirmAction] = useState<null | 'stop-motors'>(null);
+    const [lastSync, setLastSync] = useState(new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }));
+
 
     interface Identity {
         id: string;
@@ -76,6 +78,7 @@ const AdminDashboard = () => {
                 const alertsRes = await fetch("http://localhost:5000/api/alerts");
                 const alertsData = await alertsRes.json();
                 setAlerts(alertsData);
+                setLastSync(new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }));
             } catch (error) {
                 console.error("Error fetching system data:", error);
             }
@@ -205,7 +208,7 @@ const AdminDashboard = () => {
             </div>
 
             <div className="text-right pb-1">
-                <span className="text-[10px] text-gray-500 uppercase tracking-widest font-mono">Last System Sync: 12:42:08 | Server: Connected</span>
+                <span className="text-[10px] text-gray-500 uppercase tracking-widest font-mono">Last System Sync: {lastSync} | Server: Connected</span>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">

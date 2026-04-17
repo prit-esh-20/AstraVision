@@ -28,7 +28,16 @@ const UserLogs = () => {
         }
 
         // Sort latest first
-        result.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        result.sort((a, b) => {
+            const getTs = (ts: any) => {
+                if (!ts) return 0;
+                const dateStr = typeof ts === 'string' && !ts.includes('Z') && !ts.includes('+') 
+                    ? ts.replace(' ', 'T') + 'Z' 
+                    : ts;
+                return new Date(dateStr).getTime();
+            };
+            return getTs(b.created_at) - getTs(a.created_at);
+        });
         return result;
     }, [logs, filter, dateRange]);
 
@@ -101,9 +110,12 @@ const UserLogs = () => {
                         {filteredLogs.length > 0 ? (
                             filteredLogs.map((log, idx) => {
                                 const type = log.event || 'Info';
-                                const dateObj = new Date(log.created_at);
-                                const timeStr = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                                const dateStr = dateObj.toLocaleDateString();
+                                const dateStrRaw = typeof log.created_at === 'string' && !log.created_at.includes('Z') && !log.created_at.includes('+') 
+                                    ? log.created_at.replace(' ', 'T') + 'Z' 
+                                    : log.created_at;
+                                const dateObj = new Date(dateStrRaw);
+                                const timeStr = dateObj.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+                                const dateStr = dateObj.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' });
 
                                 return (
                                     <motion.div

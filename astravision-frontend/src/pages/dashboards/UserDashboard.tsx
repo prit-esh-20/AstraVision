@@ -147,7 +147,7 @@ const UserDashboard = () => {
 
                         <div className="absolute bottom-4 left-4 z-30 pointer-events-none">
                             <span className="text-[10px] font-mono text-white/70 bg-black/60 backdrop-blur-sm border border-white/10 px-2 py-1 rounded tracking-wider">
-                                {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()}
+                                {new Date().toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })} {new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })}
                             </span>
                         </div>
                     </div>
@@ -227,7 +227,16 @@ const UserDashboard = () => {
                             <AnimatePresence>
                                 {alerts.length > 0 ? (
                                     [...alerts]
-                                        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+                                        .sort((a, b) => {
+                                            const getTs = (ts: any) => {
+                                                if (!ts) return 0;
+                                                const dateStr = typeof ts === 'string' && !ts.includes('Z') && !ts.includes('+') 
+                                                    ? ts.replace(' ', 'T') + 'Z' 
+                                                    : ts;
+                                                return new Date(dateStr).getTime();
+                                            };
+                                            return getTs(b.created_at) - getTs(a.created_at);
+                                        })
                                         .slice(0, 5)
                                         .map((alert, idx) => {
                                             const severity = (alert.severity || 'INFO').toUpperCase();
@@ -262,7 +271,18 @@ const UserDashboard = () => {
                                                     <div className="flex justify-between items-start mb-2 relative z-10">
                                                         <span className="text-[10px] font-mono opacity-80 flex items-center gap-1.5 font-bold">
                                                             {getSeverityIcon(alert.severity || 'info')}
-                                                            {alert.created_at ? new Date(alert.created_at).toLocaleTimeString() : 'N/A'}
+                                                            {alert.created_at ? (() => {
+                                                                const dateStr = typeof alert.created_at === 'string' && !alert.created_at.includes('Z') && !alert.created_at.includes('+') 
+                                                                    ? alert.created_at.replace(' ', 'T') + 'Z' 
+                                                                    : alert.created_at;
+                                                                return new Date(dateStr).toLocaleTimeString('en-IN', {
+                                                                    timeZone: 'Asia/Kolkata',
+                                                                    hour: '2-digit',
+                                                                    minute: '2-digit',
+                                                                    second: '2-digit',
+                                                                    hour12: true
+                                                                });
+                                                            })() : 'N/A'}
                                                         </span>
                                                         <span className={`text-[9px] font-bold uppercase tracking-widest bg-black/60 px-2.5 py-1 rounded border border-current opacity-90 ${textColor}`}>
                                                             {status}

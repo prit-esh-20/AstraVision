@@ -35,12 +35,12 @@ const Settings = () => {
         cooldown: 30
     });
 
-    const [lastModified, setLastModified] = useState(new Date().toLocaleTimeString());
+    const [lastModified, setLastModified] = useState(new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }));
 
     const handleSave = () => {
         setHasChanges(false);
         setSaveToast(true);
-        setLastModified(new Date().toLocaleTimeString());
+        setLastModified(new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }));
         console.log("Settings Updated Successfully by Admin", {
             detection: detectionConfig,
             notifications: notificationConfig,
