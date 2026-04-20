@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Camera, Battery, Wifi, Clock, AlertTriangle, ShieldCheck, Info } from 'lucide-react';
+import { Battery, Wifi, Clock, AlertTriangle, ShieldCheck, Info } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const UserDashboard = () => {

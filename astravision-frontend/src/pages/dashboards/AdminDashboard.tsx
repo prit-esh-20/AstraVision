@@ -24,9 +24,7 @@ const AdminDashboard = () => {
     const [patrolActive, setPatrolActive] = useState(true);
     const [mlEnabled, setMlEnabled] = useState(true);
     const [testMode, setTestMode] = useState(false);
-    const [servoAngle] = useState(180);
     const [mlThreshold] = useState(85);
-    const [ultraThreshold] = useState(0.5);
     interface RobotMetrics {
         uptime: string;
         cpu_load: number;
@@ -92,20 +90,6 @@ const AdminDashboard = () => {
     const activeUsersCount = users.filter(u => u.status.toLowerCase() === 'active').length;
     const adminCount = users.filter(u => u.role.toLowerCase() === 'admin').length;
     const criticalAlarmsCount = alerts.filter(a => a.severity === 'CRITICAL').length;
-
-    const updateUltrasonicDistance = async (value: number) => {
-        try {
-            await fetch('http://localhost:5000/api/config/ultrasonic', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ distance: value }),
-            });
-        } catch (error) {
-            console.error('Error updating ultrasonic distance:', error);
-        }
-    };
 
     return (
         <div className="max-w-7xl mx-auto space-y-4 pb-20 p-2 md:p-6 h-full overflow-y-auto custom-scrollbar relative">
