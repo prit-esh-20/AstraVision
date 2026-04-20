@@ -5,6 +5,9 @@ types.setTypeParser(1114, str => new Date(str + "Z"));
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 pool.connect()
@@ -15,4 +18,4 @@ pool.connect()
     console.error("Database connection error:", err);
   });
 
-module.exports = pool;  
+module.exports = pool;
