@@ -21,6 +21,16 @@ npm install
 npm run dev
 ```
 
-### Backend
+## Deployment & Testing
 
-(Coming soon)
+The system is deployed and can be accessed via the following endpoints:
+
+- **Frontend (UI)**: [https://astra-vision.vercel.app](https://astra-vision.vercel.app)
+- **Backend API**: [https://astravision-backend.onrender.com](https://astravision-backend.onrender.com)
+- **ML Engine (Docs)**: [https://astravision.onrender.com/docs](https://astravision.onrender.com/docs)
+
+### Local Camera Testing (ngrok)
+To bridge the local ESP32-CAM stream with the cloud dashboard, use:
+```bash
+ngrok http 10.77.189.134:80
+```
