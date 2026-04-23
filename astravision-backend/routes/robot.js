@@ -26,7 +26,7 @@ router.get("/status", async (req, res) => {
 router.post("/status", async (req, res) => {
   try {
     const { battery_level, location, mode, status } = req.body;
-    const final_battery = battery_level || 29;
+    const final_battery = battery_level || 75;
 
     const result = await pool.query(
       "INSERT INTO robot_status (battery_level, location, mode, status) VALUES ($1,$2,$3,$4) RETURNING *, battery_level AS battery",
