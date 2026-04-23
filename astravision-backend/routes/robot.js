@@ -47,14 +47,14 @@ router.get("/detect-live", async (req, res) => {
     try {
       espResponse = await axios.get("https://catcher-defog-luncheon.ngrok-free.dev/capture", {
       responseType: "arraybuffer",
-      timeout: 5000,
+      timeout: 15000,
     });
 
     } catch (e) {
       console.log("Capture from port 80 failed, trying port 81...");
         espResponse = await axios.get("https://catcher-defog-luncheon.ngrok-free.dev/capture", {
         responseType: "arraybuffer",
-        timeout: 5000,  
+        timeout: 15000,  
       });
     }
 
