@@ -52,7 +52,7 @@ router.get("/detect-live", async (req, res) => {
 
     } catch (e) {
       console.log("Capture from port 80 failed, trying port 81...");
-        espResponse = await axios.get("https://catcher-defog-luncheon.ngrok-free.dev/capture", {
+        espResponse = await axios.get("https://catcher-defog-luncheon.ngrok-free.dev /capture", {
         responseType: "arraybuffer",
         timeout: 15000,  
       });
@@ -84,7 +84,7 @@ router.get("/detect-live", async (req, res) => {
       prediction: "Offline", 
       probability: 0,
       error: error.message,
-      suggestion: "Check if ESP32-CAM IP (10.130.166.134) is reachable and ML API is online."
+      suggestion: "Check if ESP32-CAM IP (192.168.32.134:80) is reachable and ML API is online."
     });
   }
 });
